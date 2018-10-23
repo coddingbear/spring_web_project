@@ -3,6 +3,9 @@ package org.codingbear.persistence;
 import static org.junit.Assert.fail;
 import java.sql.Connection;
 import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.codingbear.config.RootConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +22,19 @@ public class DataSourceTests {
 	@Setter(onMethod_ = {@Autowired})
 	private DataSource dataSource;
 	
+	@Setter(onMethod_ = {@Autowired})
+	private SqlSessionFactory sqlSessionFactory;
+	
+	@Test
+	public void testMyBatis() {
+		try(SqlSession session = sqlSessionFactory.openSession();
+			Connection con = session.getConnection();){
+			log.info(session);
+			log.info(con);
+		} catch(Exception e) {
+			fail(e.getMessage());
+		}
+	}
 	@Test
 	public void testConnetion() {
 		try(Connection con = dataSource.getConnection()) {

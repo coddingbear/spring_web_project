@@ -8,12 +8,13 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:property-placeholder location="classpath:database.properties"/>
 	<!-- 컨넥트 풀 빈 설정 -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"/>
-		<property name="username" value="book_ex"/>
-		<property name="password" value="bookpass"/>
+		<property name="driverClassName" value="${database.driverClassName}"/>
+		<property name="jdbcUrl"  value="${database.jdbcUrl}"/>
+		<property name="username" value="${database.username}"/>
+		<property name="password" value="${database.password}"/>
 	</bean>
 	
 	<!-- 데이타 소스 빈 정의 : HikariCP configuration -->
@@ -24,6 +25,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
+	
 	<!-- MyBatis 관련 애노테이션을 찾아서 처리합니다. -->
 	<mybatis-spring:scan base-package="org.codingbear.mapper"/>
 	<!-- @Component 애노테이션을 찾아서 처리합니다. -->

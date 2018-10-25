@@ -1,6 +1,6 @@
 package com.codingbear.domain;
 
-import java.sql.Date;
+import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 

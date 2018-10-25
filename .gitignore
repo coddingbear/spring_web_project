@@ -5,13 +5,12 @@
 hs_err_pid*
 *.iml
 
-
 .gradle
 build/
-
 .metadata
 .gradle
 bin/
+
 tmp/
 *.tmp
 *.bak
@@ -20,7 +19,8 @@ tmp/
 
 .classpath
 .buildpath
+
 .target
 target/
-.texlipse
-.settings/
+
+Part01/**/.settings/

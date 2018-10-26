@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codingbear.mapper.BoardMapper">
+	
+	<!-- select 문으로 게시글 목록 가져오기 -->
+	<select id="getList" resultType="com.codingbear.domain.BoardVO">
+	<![CDATA[
+		SELECT * FROM tbl_board WHERE bno > 0
+		ORDER BY parent DESC, seqno ASC
+	]]>	
+	</select>
+	
+	<!-- insert 문만 처리되고 생성된 PK 값을 알 필요가 없는 경우 -->
+	<insert id="insert">
+		INSERT INTO tbl_board (bno, title, content, writer, parent)
+		VALUES (seq_board.nextval, #{title}, #{content}, #{writer}, seq_board.currval)
+	</insert>
+	
+	<!-- insert 문이 실행되고 생성된 PK 값을 알아야 하는 경우 -->
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			SELECT seq_board.nextval FROM dual
+		</selectKey>
+		
+		INSERT INTO tbl_board (bno, title, content, writer, parent)
+		VALUES (#{bno}, #{title}, #{content}, #{writer}, #{bno})
+	</insert>
+	
+	<!-- select 문으로 게시글 가져오기 -->
+	<select id="read" resultType="com.codingbear.domain.BoardVO">
+		SELECT * FROM tbl_board where bno = #{bno}
+	</select>
+	
+	<!-- delete 문으로 게시글 삭제  -->
+	<delete id="delete">
+		DELETE FROM tbl_board WHERE bno = #{bno}
+	</delete>
+	
+	<!-- update 문으로 게시글 수정 -->
+	<update id="update">
+		UPDATE tbl_board
+		SET title = #{title},
+			content = #{content},
+			writer = #{writer},
+			updateDate = SYSDATE
+		WHERE bno = #{bno}
+	</update>
+</mapper>

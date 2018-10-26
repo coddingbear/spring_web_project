@@ -1,4 +1,4 @@
-package com.codingbear.persistence;
+package com.codingbear.mapper;
 
 import static org.junit.Assert.fail;
 import java.sql.Connection;

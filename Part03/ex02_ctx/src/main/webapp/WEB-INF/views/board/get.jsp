@@ -33,9 +33,14 @@
 						<input type="text" class="form-control" name="writer" 
 							value="<c:out value='${board.writer}'/>" readonly="readonly" />
 					</div>
-					<a href="<c:url value='/'/>board/modify?bno=<c:out value='${board.bno}'/>" data-oper="modify" class="btn btn-default">Modify</a>
-					<a href="<c:url value='/'/>board/list"  data-oper="list"  class="btn btn-info">List</a>
-					<form action="<c:url value="/"/>" id="modify" method="get">
+                    <div class="form-group">
+                      <label>RegDate</label>
+                      <input type="text" class="form-control" name="regDate" 
+                        value="<fmt:formatDate pattern='yyyy/MM/dd' value='${board.regdate}'/>" readonly="readonly" />
+                    </div>
+                    <button type="button" data-oper="modify" class="btn btn-default">Modify</button>
+                    <button type="button" data-oper="list" class="btn btn-info">List</button>
+					<form  id="operForm" action="<c:url value="/"/>board/modify" method="get">
 						<input type="hidden" name="bno" id="bno" value="<c:out value="${board.bno}" />" />
 					</form>
 				</div><!-- /.panel-body -->
@@ -45,9 +50,16 @@
 	<!-- //페이지 콘텐츠 부분 -->
 <script type="text/javascript">
 	$(document).ready(function() {
+		var contextUrl = '<c:url value="/"/>';
 		var operForm = $("#operForm");
 		$("button[data-oper='modify']").on("click", function(e){
-			
+			operForm.attr("action", contextUrl + "board/modify").submit();
+		});
+		
+		$("button[data-oper='list']").on("click", function(e){
+			operForm.find("#bno").remove();
+			operForm.attr("action", contextUrl + "board/list");
+			operForm.submit();
 		});
 	});
 </script>

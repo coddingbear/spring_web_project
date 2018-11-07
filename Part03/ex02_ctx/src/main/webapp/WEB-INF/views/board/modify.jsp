@@ -13,11 +13,11 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Board Modify Page</div>
 				<div class="panel-body">
-				<form role="form" action="/board/modify" method="post">
+				<form role="form" action="<c:url value='/'/>board/modify" method="post">
 					<div class="form-group">
-						<label>Bno</label> 
+						<label>No</label> 
 						<input type="text" class="form-control" name="bno" 
-							value="<c:out value='${board.bno}'/>" readonly="readonly"/>
+                        	value="<c:out value='${board.bno}'/>" readonly="readonly"/>
 					</div>
 					<div class="form-group">
 						<label>TItle</label> 
@@ -36,7 +36,7 @@
 					<div class="form-group">
 						<label>RegDate</label>
 						<input type="text" class="form-control" name="regDate" 
-							value="<fmt:formatDate pattern='yyyy/MM/dd' value='${board.writer}'/>" readonly="readonly" />
+							value="<fmt:formatDate pattern='yyyy/MM/dd' value='${board.regdate}'/>" readonly="readonly" />
 					</div>
 					<div class="form-group">
 						<label>Update Date</label>
@@ -54,6 +54,7 @@
 	<!-- //페이지 콘텐츠 부분 -->
 <script type="text/javascript">
 	$(document).ready(function() {
+		var contextUrl = '<c:url value="/"/>';
 		var formObj = $("form");
 		$('button').on("click", function(e) {
 			e.preventDefault();
@@ -61,14 +62,14 @@
 			console.log(operation);
 			
 			if(operation === 'remove') {
-				formObj.attr("action", "<c:url value='/'/>board/remove");
+				formObj.attr("action", contextUrl + "board/remove");
 			} else if(operation === 'list') {
 				// move to list
-				self.location = "<c:url value='/'/>/board/list";
+				self.location =  contextUrl + "/board/list";
 				return;
 			}
 			formObj.submit();
 		});
 	});
 </script>
-<%@ include  file="../includes/footer.jsp" %>		
+<%@ include  file="../includes/footer.jsp" %> 

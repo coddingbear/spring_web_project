@@ -3,6 +3,7 @@ package com.codingbear.mapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Select;
 import com.codingbear.domain.BoardVO;
+import com.codingbear.domain.Criteria;
 
 public interface BoardMapper {
 	
@@ -12,6 +13,13 @@ public interface BoardMapper {
 	 */
 	//@Select("SELECT * FROM tbl_board WHERE bno > 0")
 	public List<BoardVO> getList();
+	
+	/**
+	 * 페이징 처리에 따른 글 목록 가져오기
+	 * @param cri
+	 * @return List<BoardVO>
+	 */
+	public List<BoardVO> getListWithPaging(Criteria cri);
 	
 	/**
 	 * 글 저장하기 : insert만 처리되고 생성된 PK 값을 알 필요가 없는 경우

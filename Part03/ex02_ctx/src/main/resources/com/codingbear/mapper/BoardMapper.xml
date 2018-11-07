@@ -11,6 +11,21 @@
 		ORDER BY parent DESC, seqno ASC
 	]]>	
 	</select>
+  
+    <!-- select 문으로 게시글 목록 가져오기(with 페이징 처리) -->
+    <select id="getListWithPaging" resultType="com.codingbear.domain.BoardVO">
+    <![CDATA[
+        SELECT 
+        	bno, title, content, writer, regdate, updatedate, parent, seqno, depth
+        FROM (
+        	SELECT /*+INDEX_DESC(tbl_board pk_board) */
+        		rownum rn, bno, title, content, writer, regdate, updatedate, parent, seqno, depth
+        	FROM tbl_board 
+        	WHERE rownum <= #{pageNum} * #{amount}
+        )
+        WHERE rn > (#{pageNum} - 1) * #{amount}
+    ]]> 
+    </select>
 	
 	<!-- insert 문만 처리되고 생성된 PK 값을 알 필요가 없는 경우 -->
 	<insert id="insert">

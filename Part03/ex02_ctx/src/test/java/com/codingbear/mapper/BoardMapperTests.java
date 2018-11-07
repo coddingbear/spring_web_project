@@ -1,5 +1,7 @@
 package com.codingbear.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.codingbear.domain.BoardVO;
+import com.codingbear.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -22,7 +25,8 @@ public class BoardMapperTests {
 	// 게시글 목록 테스트
 	@Test
 	public void testGetList() {
-		mapper.getList().forEach(board->log.info(board));
+		//mapper.getList().forEach(board->log.info(board));
+		mapper.getListWithPaging(new Criteria(2, 10)).forEach(board -> log.info(board));
 	}
 	
 	// 새 게시글 생성 테스트
@@ -65,6 +69,17 @@ public class BoardMapperTests {
 		
 		int count = mapper.update(board);
 		log.info("UPDATE COUNT: " + count);
+	}
+	
+	// 페이징 테스트와 수정
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		// 10개씩 3 페이지 목록 보기
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board -> log.info(board));
 	}
 	
 }

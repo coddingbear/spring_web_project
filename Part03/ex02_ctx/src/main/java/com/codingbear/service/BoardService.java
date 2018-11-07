@@ -3,6 +3,7 @@ package com.codingbear.service;
 import java.util.List;
 
 import com.codingbear.domain.BoardVO;
+import com.codingbear.domain.Criteria;
 
 // 9.1 비즈니스 계층 설정
 public interface BoardService {
@@ -38,5 +39,6 @@ public interface BoardService {
 	 * 게시글 목록
 	 * @return
 	 */
-	public List<BoardVO> getList();
+	// public List<BoardVO> getList();
+	public List<BoardVO> getList(Criteria cri);  // 목록보기 페이징처리
 }
